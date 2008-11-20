@@ -6,4 +6,6 @@ $PDO->exec("DELETE FROM $table
             WHERE name='funky_cache_by_default' 
             LIMIT 1");
 
-$PDO->exec("DROP TABLE funky_cache_page");
+$table = TABLE_PREFIX . "funky_cache_page";
+
+$PDO->exec("DROP TABLE $table");
