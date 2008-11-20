@@ -35,8 +35,9 @@ if (class_exists('AutoLoader')) {
         $data['page'] = $page;
         if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
             $cache = new FunkyCachePage($data);          
-            $cache->save();
         }
+        $cache->page = $page;
+        $cache->save();
     }
 
 }

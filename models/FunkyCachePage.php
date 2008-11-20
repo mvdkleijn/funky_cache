@@ -21,7 +21,6 @@ class FunkyCachePage extends Record
     public function beforeSave()
     {   
         $this->created_on = date('Y-m-d H:i:s');
-
         /* If directories do not exist create them. */
         $parts = explode('/', $this->path());
         $file  = array_pop($parts);
@@ -36,7 +35,7 @@ class FunkyCachePage extends Record
 
     public function beforeDelete()
     {
-        return unlink($this->path());
+        return @unlink($this->path());
     }
     
     public function path() {

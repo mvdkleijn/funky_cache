@@ -11,7 +11,8 @@ $PDO->exec("CREATE TABLE $table (
             id int(11) NOT NULL auto_increment,
             url varchar(255) default NULL,
             created_on datetime default NULL,
-            PRIMARY KEY (id)
+            PRIMARY KEY (id),
+            UNIQUE (url)
             ) DEFAULT CHARSET=utf8");
 
             
