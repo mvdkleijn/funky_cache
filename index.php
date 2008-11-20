@@ -31,8 +31,8 @@ if (class_exists('AutoLoader')) {
     Observer::observe('page_found',           'funky_cache_create');
 
     function funky_cache_create($page) {
-        print_r($page);
-        $data['url'] = str_replace(BASE_URL, '/', $page->url());
+        $data['url']  = str_replace(BASE_URL, '/', $page->url());
+        $data['page'] = $page;
         if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
             $cache = new FunkyCachePage($data);          
             $cache->save();
