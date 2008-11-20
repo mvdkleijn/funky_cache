@@ -13,7 +13,17 @@ class FunkyCacheController extends PluginController
     }
 
     function index() {
-        $this->display('funky_cache/views/index');
+        $this->display('funky_cache/views/index', array(
+            'cached_page' => Record::findAllFrom('FunkyCachePage')
+        ));
+    }
+    
+    function clear() {
+        $cached_page = Record::findAllFrom('FunkyCachePage');
+        foreach ($cached_page as $page) {
+            $page->delete();
+        }        
+        redirect(get_url('plugin/funky_cache/'));   
     }
     
     function settings() {
