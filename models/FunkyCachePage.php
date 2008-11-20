@@ -19,8 +19,18 @@ class FunkyCachePage extends Record
     }
         
     public function beforeSave()
-    {
-        $this->created_on = date('Y-m-d H:i:s');       
+    {   
+        $this->created_on = date('Y-m-d H:i:s');
+
+        /* If directories do not exist create them. */
+        $parts = explode('/', $this->path());
+        $file  = array_pop($parts);
+        $dir = '';
+        foreach($parts as $part) {
+            if(!is_dir($dir .= "/$part")) {
+                mkdir($dir);
+            }
+        }
         return file_put_contents($this->path(), $this->content(), LOCK_EX);
     }
 
