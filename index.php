@@ -58,6 +58,12 @@ if (class_exists('AutoLoader')) {
     function funky_cache_create($page) {
         if ($page->funky_cache_enabled) {
             $data['url']  = str_replace(BASE_URL, '/', $page->url());
+            if ('/' == $data['url']) {
+                $data['url'] = '/index';
+            }
+            if (!trim(URL_SUFFIX)) {
+                $data['url'] .= '.html';
+            }
             $data['page'] = $page;
             if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
                 $cache = new FunkyCachePage($data);          

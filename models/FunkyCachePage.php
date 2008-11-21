@@ -39,9 +39,6 @@ class FunkyCachePage extends Record
     }
     
     public function path() {
-        if ('/' == $this->url) {
-            $this->url = '/index.html';
-        } 
         return $_SERVER['DOCUMENT_ROOT'] . $this->url;
     }
     
