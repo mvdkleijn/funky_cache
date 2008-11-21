@@ -19,7 +19,7 @@ class FunkyCachePage extends Record
     }
         
     public function beforeSave()
-    {   
+    {           
         $this->created_on = date('Y-m-d H:i:s');
         /* If directories do not exist create them. */
         $parts = explode('/', $this->path());
@@ -39,6 +39,9 @@ class FunkyCachePage extends Record
     }
     
     public function path() {
+        if ('/' == $this->url) {
+            $this->url = '/index.html';
+        } 
         return $_SERVER['DOCUMENT_ROOT'] . $this->url;
     }
     
