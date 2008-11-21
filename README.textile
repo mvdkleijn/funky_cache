@@ -4,7 +4,7 @@ Copy files to frog/plugins/funky_cache/ folder. If you do not have access to git
 
 <pre><code>
 cd frog/plugins/
-git clone git@github.com:tuupola/frog_funky_cache.git funky_cache
+git clone git://github.com/tuupola/frog_funky_cache.git funky_cache
 </code></pre>
 
 Go to admin interface and enable Funky Cache. Currently you must have the following set in you config.php:
