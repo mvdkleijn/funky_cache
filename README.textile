@@ -1,4 +1,30 @@
+h2. Install
+
+Copy files to frog/plugins/funky_cache/ folder. If you do not have access to git download zip or tarball using the provided download link above.
+
+<pre><code>
+cd frog/plugins/
+git clone git@github.com:tuupola/frog_funky_cache.git funky_cache
+</code></pre>
+
+Go to admin interface and enable Funky Cache. Currently you must have the following set in you config.php:
+
+<pre><code>
+define('USE_MOD_REWRITE', true);
+define('URL_SUFFIX', '.html');
+</code></pre>
+
+Also depending on you Apache configuration you might need to add the following line to .htaccess file. Without it your frontpage might not be cached.
+
+<pre><code>
+DirectoryIndex index.html index.php
+</code></pre>
+
+And one last thing. Your webserver process *must have write privileges* to your document root. Either do chmod a+w or chown apacheuser to the document root folder.
+
 h2. Funky cache disabled
+
+Vanilla Frog give out about 90 pages per second. These tests are done on Apache running on localhost to rule out network latency.
 
 <pre><code>
 > ab -n 1000 -c 20 http://dev.example.com/about_us.html
@@ -10,7 +36,9 @@ Time per request:       10.600 [ms] (mean, across all concurrent requests)
 Transfer rate:          255.66 [Kbytes/sec] received
 </code></pre>
 
-h2. File cache disabled
+h2. File cache enabled
+
+Using Gilles Doge's "File Cache plugin":http://www.antistatique.net/blog/index.php/post/cache-plugin-frogcms gives 50 more request per second.
 
 <pre><code>
 > ab -n 1000 -c 20 http://dev.example.com/about_us.html
@@ -24,6 +52,8 @@ Transfer rate:          617.08 [Kbytes/sec] received
 
 
 h2. Funky cache enabled
+
+With Funky Cache only first request is passed to Frog. All following requests are served as cached static file  avoiding call to CMS altogether. Now you site can withstand Digg effect or being Slashdotted :)
 
 <pre><code>
 > ab -n 1000 -c 20 http://dev.example.com/about_us.html
