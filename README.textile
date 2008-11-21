@@ -3,47 +3,34 @@ h2. Funky cache disabled
 <pre><code>
 > ab -n 1000 -c 20 http://dev.example.com/about_us.html
 
-Server Software:        Apache/2.2.8
-Server Hostname:        dev.example.com
-Server Port:            80
-
-Document Path:          /about_us.html
-Document Length:        2339 bytes
-
-Concurrency Level:      20
 Time taken for tests:   10.600109 seconds
-Complete requests:      1000
-Failed requests:        0
-Write errors:           0
-Total transferred:      2776000 bytes
-HTML transferred:       2339000 bytes
 Requests per second:    94.34 [#/sec] (mean)
 Time per request:       212.002 [ms] (mean)
 Time per request:       10.600 [ms] (mean, across all concurrent requests)
 Transfer rate:          255.66 [Kbytes/sec] received
 </code></pre>
 
+h2. File cache disabled
+
+<pre><code>
+> ab -n 1000 -c 20 http://dev.example.com/about_us.html
+
+Time taken for tests:   6.707378 seconds
+Requests per second:    149.09 [#/sec] (mean)
+Time per request:       134.148 [ms] (mean)
+Time per request:       6.707 [ms] (mean, across all concurrent requests)
+Transfer rate:          617.08 [Kbytes/sec] received
+</code></pre>
+
+
 h2. Funky cache enabled
 
 <pre><code>
 > ab -n 1000 -c 20 http://dev.example.com/about_us.html
 
-Server Software:        Apache/2.2.8
-Server Hostname:        dev.example.com
-Server Port:            80
-
-Document Path:          /about_us.html
-Document Length:        2339 bytes
-
-Concurrency Level:      20
-Time taken for tests:   0.547922 seconds
-Complete requests:      1000
-Failed requests:        0
-Write errors:           0
-Total transferred:      2575000 bytes
-HTML transferred:       2339000 bytes
-Requests per second:    1825.08 [#/sec] (mean)
-Time per request:       10.958 [ms] (mean)
-Time per request:       0.548 [ms] (mean, across all concurrent requests)
-Transfer rate:          4588.24 [Kbytes/sec] received
+Time taken for tests:   0.568727 seconds
+Requests per second:    1758.31 [#/sec] (mean)
+Time per request:       11.375 [ms] (mean)
+Time per request:       0.569 [ms] (mean, across all concurrent requests)
+Transfer rate:          7284.69 [Kbytes/sec] received
 </code></pre>
