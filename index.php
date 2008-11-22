@@ -6,7 +6,7 @@ Plugin::setInfos(array(
     'id'          => 'funky_cache',
     'title'       => 'Funky Cache', 
     'description' => 'Enables funky caching which makes your site ultra fast.', 
-    'version'     => '0.2.0', 
+    'version'     => '0.2.2', 
     'license'     => 'MIT',
     'require_frog_version' => '0.9.4',
     'update_url'  => 'http://www.appelsiini.net/download/frog-plugins.xml',
@@ -54,15 +54,28 @@ if (class_exists('AutoLoader')) {
     Record::connection($__FROG_CONN__);
     
     Observer::observe('page_found',           'funky_cache_create');
+    Observer::observe('page_requested',       'funky_cache_debug');
+
+    function funky_cache_debug($page) {
+/*
+        print "DEBUG";
+        print "-" . $_SERVER['QUERY_STRING'] . "-";
+        */
+    }
 
     function funky_cache_create($page) {
         if ($page->funky_cache_enabled) {
-            $data['url']  = str_replace(BASE_URL, '/', $page->url());
-            if ('/' == $data['url']) {
-                $data['url'] = '/index' . URL_SUFFIX;
-            }
-            if (!trim(URL_SUFFIX)) {
+            $data['url'] = "/" . $_SERVER['QUERY_STRING'];
+            /* Supporting both /foo.html and /foo requires some jugling. */
+            /* TODO: This jugling should be in model. */
+            if (!strlen(URL_SUFFIX)) {
                 $data['url'] .= '.html';
+            }
+            if ('/.html' == $data['url']) {
+                $data['url'] = '/index.html';
+            }
+            if ('/' == $data['url']) {
+                $data['url'] = '/index.html';
             }
             $data['page'] = $page;
             if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {

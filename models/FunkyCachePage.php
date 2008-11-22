@@ -24,9 +24,19 @@ class FunkyCachePage extends Record
         /* If directories do not exist create them. */
         $parts = explode('/', $this->path());
         $file  = array_pop($parts);
+
+        /* If deep link create directories when needed. */
         $dir = '';
         foreach($parts as $part) {
             if(!is_dir($dir .= "/$part")) {
+                mkdir($dir);
+            }
+        }
+        /* Fix case when articles.html is created before articles/ */
+        /* TODO This still creates on extra directory in the end.  */
+        if (('archive' == $this->page->behavior_id) || ($this->page instanceof PageArchive)) {
+            $dir .= '/' . basename($file, '.html');
+            if(!is_dir($dir)) {
                 mkdir($dir);
             }
         }
