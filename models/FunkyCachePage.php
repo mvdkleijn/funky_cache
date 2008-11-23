@@ -35,7 +35,7 @@ class FunkyCachePage extends Record
         /* Fix case when articles.html is created before articles/ */
         /* TODO This still creates on extra directory in the end.  */
         if (('archive' == $this->page->behavior_id) || ($this->page instanceof PageArchive)) {
-            $dir .= '/' . basename($file, '.html');
+            $dir .= '/' . basename($file, funky_cache_suffix());
             if(!is_dir($dir)) {
                 mkdir($dir);
             }

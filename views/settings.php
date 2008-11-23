@@ -13,6 +13,15 @@
 				</select>	
 			</td>
             <td class="help"><?php echo __('Choose yes if you want your pages to be cached by default. Otherwise you must set caching for each page manually.'); ?></td>
+        </tr>
+        <tr>
+            <td class="label">
+              <label for="funky_cache_suffix"><?php echo __('Cache file suffix'); ?>: </label>
+            </td>
+            <td class="field">
+              <input type="text" name="funky_cache_suffix" value="<?php print $funky_cache_suffix ?>" />
+			</td>
+            <td class="help"><?php echo __('Suffix for cache files written to disk. If you use other than .html you also need to update your mod_rewrite rules.'); ?></td>
         </tr>	
     </table>
 </fieldset>

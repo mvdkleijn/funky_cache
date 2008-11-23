@@ -6,7 +6,7 @@ Plugin::setInfos(array(
     'id'          => 'funky_cache',
     'title'       => 'Funky Cache', 
     'description' => 'Enables funky caching which makes your site ultra fast.', 
-    'version'     => '0.2.2', 
+    'version'     => '0.2.3', 
     'license'     => 'MIT',
     'require_frog_version' => '0.9.4',
     'update_url'  => 'http://www.appelsiini.net/download/frog-plugins.xml',
@@ -65,18 +65,17 @@ if (class_exists('AutoLoader')) {
 
     function funky_cache_create($page) {
         if ($page->funky_cache_enabled) {
+            funky_cache_suffix();
             $data['url'] = "/" . $_SERVER['QUERY_STRING'];
-            /* Supporting both /foo.html and /foo requires some jugling. */
-            /* TODO: This jugling should be in model. */
-            if (!strlen(URL_SUFFIX)) {
-                $data['url'] .= '.html';
-            }
-            if ('/.html' == $data['url']) {
-                $data['url'] = '/index.html';
-            }
+            /* Frontpage should become index.html */
             if ('/' == $data['url']) {
-                $data['url'] = '/index.html';
+                $data['url'] = '/index' . funky_cache_suffix();
+            /* If Frog suffix is not used, use suffix from cache settings */
+            /* For example /articles becomes /articles.html */
+            } elseif (!strlen(URL_SUFFIX)) {
+                $data['url'] .= funky_cache_suffix();
             }
+            print_r($data);
             $data['page'] = $page;
             if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
                 $cache = new FunkyCachePage($data);          
@@ -85,5 +84,15 @@ if (class_exists('AutoLoader')) {
             $cache->save();            
         }
     }
+}
 
+function funky_cache_suffix() {
+    /* Oh how much I hate global objects. */
+    global $__FROG_CONN__;
+    
+    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_suffix'";
+	$stmt = $__FROG_CONN__->prepare($sql);
+	$stmt->execute();
+	$funky_cache_suffix = $stmt->fetchObject();
+	return $funky_cache_suffix->value;
 }
