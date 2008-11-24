@@ -30,6 +30,7 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteRule ^$ index.xhtml [L,QSA]
 
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
+    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-l
     # Main URL rewriting.
     RewriteRule ^(.*)$ index.php?$1 [L,QSA]
@@ -47,7 +48,6 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteBase /
     
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
     # Administration URL rewriting.
     RewriteRule ^admin(.*)$ admin/index.php?$1 [L,QSA]

@@ -57,10 +57,7 @@ if (class_exists('AutoLoader')) {
     Observer::observe('page_requested',       'funky_cache_debug');
 
     function funky_cache_debug($page) {
-/*
-        print "DEBUG";
-        print "-" . $_SERVER['QUERY_STRING'] . "-";
-        */
+       /* print "-" . $_SERVER['QUERY_STRING'] . "-"; */
     }
 
     function funky_cache_create($page) {
