@@ -72,7 +72,6 @@ if (class_exists('AutoLoader')) {
             } elseif (!strlen(URL_SUFFIX)) {
                 $data['url'] .= funky_cache_suffix();
             }
-            print_r($data);
             $data['page'] = $page;
             if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
                 $cache = new FunkyCachePage($data);          
