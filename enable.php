@@ -11,6 +11,10 @@ $PDO->exec("INSERT INTO $table (name, value)
 $suffix = trim(URL_SUFFIX) ? URL_SUFFIX : ".html";
 $PDO->exec("INSERT INTO $table (name, value) 
             VALUES ('funky_cache_suffix', '$suffix')");
+
+/* By default write static files to document root. */
+$PDO->exec("INSERT INTO $table (name, value) 
+            VALUES ('funky_cache_folder', '/cache/')");
                     
 $table = TABLE_PREFIX . "page";
 $PDO->exec("ALTER TABLE $table

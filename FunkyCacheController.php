@@ -45,10 +45,16 @@ class FunkyCacheController extends PluginController
 		$stmt = $__FROG_CONN__->prepare($sql);
 		$stmt->execute();
 		$funky_cache_suffix = $stmt->fetchObject();
+		
+		$sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_folder'";
+		$stmt = $__FROG_CONN__->prepare($sql);
+		$stmt->execute();
+		$funky_cache_folder = $stmt->fetchObject();
 
         $this->display('funky_cache/views/settings', array(
 			'funky_cache_by_default' => $funky_cache_by_default->value,
-			'funky_cache_suffix' => $funky_cache_suffix->value
+			'funky_cache_suffix' => $funky_cache_suffix->value,
+			'funky_cache_folder' => $funky_cache_folder->value
 		));
 		
     }
@@ -57,6 +63,7 @@ class FunkyCacheController extends PluginController
 		error_reporting(E_ALL);
 		$funky_cache_by_default = mysql_escape_string($_POST['funky_cache_by_default']);
 		$funky_cache_suffix     = mysql_escape_string($_POST['funky_cache_suffix']);
+		$funky_cache_folder     = mysql_escape_string($_POST['funky_cache_folder']);
         
         global $__FROG_CONN__;
 
@@ -67,8 +74,12 @@ class FunkyCacheController extends PluginController
         $sql = "UPDATE " . TABLE_PREFIX . "setting SET value='$funky_cache_suffix' WHERE name = 'funky_cache_suffix'"; 
         $PDO = $__FROG_CONN__->prepare($sql);
         $success_2 = $PDO->execute() !== false;
+        
+        $sql = "UPDATE " . TABLE_PREFIX . "setting SET value='$funky_cache_folder' WHERE name = 'funky_cache_folder'"; 
+        $PDO = $__FROG_CONN__->prepare($sql);
+        $success_3 = $PDO->execute() !== false;
                 
-        if ($success_1 && $success_2){
+        if ($success_1 && $success_2 && $success_3){
             Flash::set('success', __('The settings have been updated.'));
         } else {
             Flash::set('error', 'An error has occured.');

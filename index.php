@@ -57,7 +57,7 @@ if (class_exists('AutoLoader')) {
     Observer::observe('page_requested',       'funky_cache_debug');
 
     function funky_cache_debug($page) {
-       /* print "-" . $_SERVER['QUERY_STRING'] . "-"; */
+       //print "-" . $_SERVER['QUERY_STRING'] . "-";
     }
 
     function funky_cache_create($page) {
@@ -72,6 +72,8 @@ if (class_exists('AutoLoader')) {
             } elseif (!strlen(URL_SUFFIX)) {
                 $data['url'] .= funky_cache_suffix();
             }
+            $data['url'] = funky_cache_folder() . $data['url'];
+            $data['url'] = preg_replace('#//#', '/', $data['url']);
             $data['page'] = $page;
             if (!($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
                 $cache = new FunkyCachePage($data);          
@@ -90,5 +92,22 @@ function funky_cache_suffix() {
 	$stmt = $__FROG_CONN__->prepare($sql);
 	$stmt->execute();
 	$funky_cache_suffix = $stmt->fetchObject();
-	return $funky_cache_suffix->value;
+    return $funky_cache_suffix->value;
+}
+
+function funky_cache_folder() {
+    /* Oh how much I hate global objects. */
+    global $__FROG_CONN__;
+    
+    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_folder'";
+	$stmt = $__FROG_CONN__->prepare($sql);
+	$stmt->execute();
+	$funky_cache_folder = $stmt->fetchObject();
+	$folder = '/' . $funky_cache_folder->value . '/';
+	$folder = preg_replace('#//*#', '/', $folder);
+    return $folder;
+}
+
+function funky_cache_folder_is_root() {
+    return '/' == funky_cache_folder();
 }

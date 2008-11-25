@@ -9,6 +9,9 @@ $PDO->exec("DELETE FROM $table
 $PDO->exec("DELETE FROM $table 
             WHERE name='funky_cache_suffix' 
             LIMIT 1");
+$PDO->exec("DELETE FROM $table 
+            WHERE name='funky_cache_folder' 
+            LIMIT 1");
             
 $table = TABLE_PREFIX . "page";
 $PDO->exec("ALTER TABLE $table 

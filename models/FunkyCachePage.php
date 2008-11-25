@@ -29,6 +29,7 @@ class FunkyCachePage extends Record
         $dir = '';
         foreach($parts as $part) {
             if(!is_dir($dir .= "/$part")) {
+                print '<br />' . $dir . '<br />';
                 mkdir($dir);
             }
         }

@@ -26,9 +26,18 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteRule ^admin(.*)$ admin/index.php?$1 [L,QSA]
 
     # Rewrite index to check for static.
-    RewriteCond  %{DOCUMENT_ROOT}/index<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^$ index.xhtml [L,QSA]
-
+    RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
+    RewriteRule ^$ <?php print funky_cache_folder() ?>index.xhtml [L,QSA]
+    
+    # Rewrite to check for cached page from cached folder.
+    RewriteCond %{REQUEST_METHOD} ^GET$
+    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI} -f
+<?php if (funky_cache_folder_is_root()): ?>
+    RewriteRule ^(.*)$ $1 [L,QSA]
+<?php else: ?>
+    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1 [L,QSA]
+<?php endif; ?>
+        
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-l
@@ -48,19 +57,26 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteBase /
     
     RewriteCond %{REQUEST_FILENAME} !-f
+<?php if (!funky_cache_folder_is_root()): ?>
+    RewriteCond %{REQUEST_FILENAME} !-d
+<?php endif; ?>
     RewriteCond %{REQUEST_FILENAME} !-l
     # Administration URL rewriting.
     RewriteRule ^admin(.*)$ admin/index.php?$1 [L,QSA]
 
     # Rewrite index to check for static.
-    RewriteCond  %{DOCUMENT_ROOT}/index<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^$ index<?php print funky_cache_suffix() ?> [L,QSA] 
-
+    RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
+    RewriteRule ^$ <?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> [L,QSA] 
+        
     # Rewrite to check for cached page.
-    RewriteCond %{REQUEST_FILENAME}<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^([^.]+)$ $1<?php print funky_cache_suffix() ?> [L,QSA]
+    RewriteCond %{REQUEST_METHOD} ^GET$
+    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI}<?php print funky_cache_suffix() ?> -f
+    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1<?php print funky_cache_suffix() ?> [L,QSA]
 
     RewriteCond %{REQUEST_FILENAME} !-f
+<?php if (!funky_cache_folder_is_root()): ?>
+    RewriteCond %{REQUEST_FILENAME} !-d
+<?php endif; ?>
     RewriteCond %{REQUEST_FILENAME} !-l
     # Main URL rewriting.
     RewriteRule ^(.*)$ index.php?$1 [L,QSA]
