@@ -38,11 +38,13 @@ if (class_exists('AutoLoader')) {
     }
     
     function funky_cache_show_select($page) {
+        $enabled = isset($page->funky_cache_enabled) ? 
+                         $page->funky_cache_enabled  : funky_cache_by_default();
         print '
           <p><label for="page_funky_cache_enabled">'.__('Should cache').'</label>
             <select id="page_funky_cache_enabled" name="page[funky_cache_enabled]">
-              <option value="0"'.($page->funky_cache_enabled == 0 ? ' selected="selected"': '').'>'.__('No').'</option>
-              <option value="1"'.($page->funky_cache_enabled == 1 ? ' selected="selected"': '').'>'.__('Yes').'</option>
+              <option value="0"'.($enabled == 0 ? ' selected="selected"': '').'>'.__('No').'</option>
+              <option value="1"'.($enabled == 1 ? ' selected="selected"': '').'>'.__('Yes').'</option>
              </select>
           </p>';
     }
@@ -91,9 +93,22 @@ function funky_cache_suffix() {
     $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_suffix'";
 	$stmt = $__FROG_CONN__->prepare($sql);
 	$stmt->execute();
-	$funky_cache_suffix = $stmt->fetchObject();
+    $funky_cache_suffix = $stmt->fetchObject();
     return $funky_cache_suffix->value;
 }
+
+
+function funky_cache_by_default() {
+    /* Oh how much I hate global objects. */
+    global $__FROG_CONN__;
+
+    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_by_default'";
+    $stmt = $__FROG_CONN__->prepare($sql);
+    $stmt->execute();
+    $funky_cache_by_default = $stmt->fetchObject();
+    return $funky_cache_by_default->value;
+}
+
 
 function funky_cache_folder() {
     /* Oh how much I hate global objects. */
