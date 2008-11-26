@@ -6,7 +6,7 @@ Plugin::setInfos(array(
     'id'          => 'funky_cache',
     'title'       => 'Funky Cache', 
     'description' => 'Enables funky caching which makes your site ultra fast.', 
-    'version'     => '0.3.1', 
+    'version'     => '0.3.2', 
     'license'     => 'MIT',
     'require_frog_version' => '0.9.4',
     'update_url'  => 'http://www.appelsiini.net/download/frog-plugins.xml',
