@@ -18,11 +18,13 @@ if (class_exists('AutoLoader')) {
     
     Plugin::addController('funky_cache', 'Cache');
     
-    Observer::observe('page_edit_after_save',   'funky_cache_delete_one');
+    #Observer::observe('page_edit_after_save',   'funky_cache_delete_one');
+    Observer::observe('page_edit_after_save',   'funky_cache_delete_all');
     Observer::observe('page_add_after_save',    'funky_cache_delete_all');
     Observer::observe('page_delete',            'funky_cache_delete_all');
     Observer::observe('view_page_edit_plugins', 'funky_cache_show_select');
     
+    /* TODO Fix this to work with configurable cache folder. */
     function funky_cache_delete_one($page) {
         $data['url'] = '/' . $page->getUri() . URL_SUFFIX;
         if (($cache = Record::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
