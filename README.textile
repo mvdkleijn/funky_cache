@@ -1,66 +1,44 @@
-h2. Install
+h3. Speed
 
-Copy files to frog/plugins/funky_cache/ folder. If you do not have access to git download zip or tarball using the provided download link above.
+Following chart show number of requests per second on a test server. Three bars represent Frog installation with no caching, with "File Cache plugin":http://www.antistatique.net/blog/index.php/post/cache-plugin-frogcms installed and with Funky Cache plugin installed. More accurate numbers in "speed comparison":http://www.appelsiini.net/2008/11/ultrafast-frog-with-funky-cache blog post.
 
-<pre><code>
+!http://chart.apis.google.com/chart?chs=540x120&chf=bg,s,ffffff|c,s,ffffff&chxt=x,y&chxl=1:|FunkyCache|FileCache|NoCache|0:|0.00|879.00|1,758.00&cht=bhg&chd=t:5.34,8.47,100.00&chco=4d89f9&chbh=25!
+
+h3. Install
+
+Copy files to <i>frog/plugins/funky_cache/</i> folder.
+
+<pre>
 cd frog/plugins/
 git clone git://github.com/tuupola/frog_funky_cache.git funky_cache
-</code></pre>
+</pre>
 
-Go to admin interface and enable Funky Cache. Currently you must have the following set in you config.php:
+Open you _config.php_ and make sure the following is set:
 
-<pre><code>
+<pre>
 define('USE_MOD_REWRITE', true);
-define('URL_SUFFIX', '.html');
-</code></pre>
+</pre>
 
-Also depending on you Apache configuration you might need to add the following line to .htaccess file. Without it your frontpage might not be cached.
+Got to admin and enable Funky Cache plugin.
 
-<pre><code>
-DirectoryIndex index.html index.php
-</code></pre>
+!http://www.appelsiini.net/assets/2008/11/21/funky_enable.png!
 
-And one last thing. Your webserver process *must have write privileges* to your document root. Either do chmod a+w or chown apacheuser to the document root folder.
+Reload the admin page to see _"Cache"_ tab appear. Click on the tab to check your settings. 
 
-h2. Funky cache disabled
+_Cache file suffix_ is important! It is the suffix of static files written to disk. It should be the same as _URL_SUFFIX_ in Frog config.php.  If your _URL_SUFFIX_ is empty cache file suffix  will default to _.html_.
 
-Vanilla Frog gives out about 90 pages per second. These tests are done on Apache running on localhost to rule out network latency.
+_Cache folder_ is the folder where static files are written. Folder is related to document root. If you leave this empty cached files will be written to document root. *Webserver must have write access to cache folder.* 
 
-<pre><code>
-> ab -n 1000 -c 20 http://dev.example.com/about_us.html
+!http://www.appelsiini.net/assets/2008/11/25/funky_settings.png!
 
-Time taken for tests:   10.600109 seconds
-Requests per second:    94.34 [#/sec] (mean)
-Time per request:       212.002 [ms] (mean)
-Time per request:       10.600 [ms] (mean, across all concurrent requests)
-Transfer rate:          255.66 [Kbytes/sec] received
-</code></pre>
+Go to shell and create the cache folder and give write access to it.
 
-h2. File cache enabled
+<pre>
+>cd path/to/document/root/
+>mkdir cache
+>chmod a+w cache
+</pre>
 
-Using Gilles Doge's "File Cache plugin":http://www.antistatique.net/blog/index.php/post/cache-plugin-frogcms gives 50 more request per second.
+Funky Cache depends on correctly setup mod_rewrite rules. Rules are different depending on your Frog and plugin settings. Click _"Your .htaccess file"_ on sidebar. Cut and paste given code to .htaccess file in your document root.
 
-<pre><code>
-> ab -n 1000 -c 20 http://dev.example.com/about_us.html
-
-Time taken for tests:   6.707378 seconds
-Requests per second:    149.09 [#/sec] (mean)
-Time per request:       134.148 [ms] (mean)
-Time per request:       6.707 [ms] (mean, across all concurrent requests)
-Transfer rate:          617.08 [Kbytes/sec] received
-</code></pre>
-
-
-h2. Funky cache enabled
-
-With Funky Cache only first request is passed to Frog. All following requests are served as cached static file  avoiding call to CMS altogether. This gives us around 1700 requests per second. Now you site can withstand Digg effect or being Slashdotted :)
-
-<pre><code>
-> ab -n 1000 -c 20 http://dev.example.com/about_us.html
-
-Time taken for tests:   0.568727 seconds
-Requests per second:    1758.31 [#/sec] (mean)
-Time per request:       11.375 [ms] (mean)
-Time per request:       0.569 [ms] (mean, across all concurrent requests)
-Transfer rate:          7284.69 [Kbytes/sec] received
-</code></pre>
+!http://www.appelsiini.net/assets/2008/11/24/funky_htaccess.png!
