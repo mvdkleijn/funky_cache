@@ -39,6 +39,10 @@ if (class_exists('AutoLoader')) {
     Observer::observe('page_delete',            'funky_cache_delete_all');
     Observer::observe('view_page_edit_plugins', 'funky_cache_show_select');
     
+    /* These currently only work in MIT fork of Frog. */
+    Observer::observe('layout_after_edit',      'funky_cache_delete_all');
+    Observer::observe('snippet_after_edit',     'funky_cache_delete_all');
+    
     /* TODO Fix this to work with configurable cache folder. */
     function funky_cache_delete_one($page) {
         $data['url'] = '/' . $page->getUri() . URL_SUFFIX;

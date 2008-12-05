@@ -27,7 +27,7 @@ class FunkyCacheController extends PluginController
 
     function index() {
         $this->display('funky_cache/views/index', array(
-            'cached_page' => Record::findAllFrom('FunkyCachePage')
+            'cached_page' => Record::findAllFrom('FunkyCachePage', '1=1 ORDER BY created_on ASC')
         ));
     }
     
