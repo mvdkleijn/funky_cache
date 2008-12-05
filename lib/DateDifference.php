@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * JavaScript Pretty Date
  * Copyright (c) 2008 John Resig (jquery.com)
  * Licensed under the MIT license.

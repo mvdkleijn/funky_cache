@@ -35,12 +35,22 @@ class FunkyCacheController extends PluginController
         $this->display('funky_cache/views/documentation');
     }
     
+    function delete($id) {
+        $cached_page = Record::findByIdFrom('FunkyCachePage', $id);
+        if ($cached_page->delete()) {
+            Flash::set('success', 'Page deleted from cache.');            
+        } else {
+            Flash::set('error', 'Could not delete cached page. Try manually from commandline.');
+        }
+        redirect(get_url('plugin/funky_cache/'));   
+    }
     
     function clear() {
         $cached_page = Record::findAllFrom('FunkyCachePage');
         foreach ($cached_page as $page) {
             $page->delete();
-        }        
+        }
+        Flash::set('success', 'Should have cleared cache.');
         redirect(get_url('plugin/funky_cache/'));   
     }
     

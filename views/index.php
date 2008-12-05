@@ -9,7 +9,7 @@
         <tr>
             <td class="field"><?php print $page->url ?></td>
             <td class="field"><?php print DateDifference::getString(new DateTime($page->created_on)); ?></td>
-            <td class="help"><?php echo __('here be the dragons') ?></td>
+            <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/') . $page->id; ?>"><img src="./images/icon-remove.gif" /></a></td>
         </tr>	
     <?php endforeach; ?>
     </table>
