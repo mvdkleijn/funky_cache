@@ -8,7 +8,7 @@
     <?php foreach ($cached_page as $page): ?>
         <tr>
             <td class="field"><?php print $page->url ?></td>
-            <td class="field"><?php print $page->created_on ?></td>
+            <td class="field"><?php print DateDifference::getString(new DateTime($page->created_on)); ?></td>
             <td class="help"><?php echo __('here be the dragons') ?></td>
         </tr>	
     <?php endforeach; ?>
