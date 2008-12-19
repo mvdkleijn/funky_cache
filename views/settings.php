@@ -9,7 +9,7 @@
       <td class="field">
 			  <select name="funky_cache_by_default">
 				  <option value="1" <?php if($funky_cache_by_default == "1") echo 'selected ="";' ?>><?php echo __('Yes'); ?></option>
-					<option value="0" <?php if($funky_cache_by_default == "0") echo 'selected ="";' ?>><?php echo __('No'); ?></option>
+				  <option value="0" <?php if($funky_cache_by_default == "0") echo 'selected ="";' ?>><?php echo __('No'); ?></option>
 				</select>	
 			</td>
       <td class="help"><?php echo __('Choose yes if you want your pages to be cached by default. Otherwise you must set caching for each page manually.'); ?></td>
