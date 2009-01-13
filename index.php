@@ -12,7 +12,7 @@
  *   http://www.appelsiini.net/projects/funky_cache
  *
  */
-
+ 
 require_once 'models/FunkyCachePage.php';
 
 Plugin::setInfos(array(
@@ -27,7 +27,7 @@ Plugin::setInfos(array(
 ));
 
 /* Stuff for backend. */
-if (class_exists('AutoLoader')) {
+if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
     
     AutoLoader::addFolder(dirname(__FILE__) . '/lib');
     
