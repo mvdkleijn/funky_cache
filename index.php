@@ -89,7 +89,7 @@ if (class_exists('AutoLoader')) {
             $data['url'] = "/" . $_SERVER['QUERY_STRING'];
             /* Frontpage should become index.html */
             if ('/' == $data['url']) {
-                $data['url'] = '/index' . funky_cache_suffix();
+                $data['url'] = '/index' . funky_cache_suffix(); 
             /* If Frog suffix is not used, use suffix from cache settings */
             /* For example /articles becomes /articles.html */
             } elseif (!strlen(URL_SUFFIX)) {
@@ -108,38 +108,15 @@ if (class_exists('AutoLoader')) {
 }
 
 function funky_cache_suffix() {
-    /* Oh how much I hate global objects. */
-    global $__FROG_CONN__;
-    
-    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_suffix'";
-	$stmt = $__FROG_CONN__->prepare($sql);
-	$stmt->execute();
-    $funky_cache_suffix = $stmt->fetchObject();
-    return $funky_cache_suffix->value;
+    return Setting::get('funky_cache_suffix');
 }
-
 
 function funky_cache_by_default() {
-    /* Oh how much I hate global objects. */
-    global $__FROG_CONN__;
-
-    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_by_default'";
-    $stmt = $__FROG_CONN__->prepare($sql);
-    $stmt->execute();
-    $funky_cache_by_default = $stmt->fetchObject();
-    return $funky_cache_by_default->value;
+    return Setting::get('funky_cache_by_default');
 }
 
-
 function funky_cache_folder() {
-    /* Oh how much I hate global objects. */
-    global $__FROG_CONN__;
-    
-    $sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_folder'";
-	$stmt = $__FROG_CONN__->prepare($sql);
-	$stmt->execute();
-	$funky_cache_folder = $stmt->fetchObject();
-	$folder = '/' . $funky_cache_folder->value . '/';
+	$folder = '/' . Setting::get('funky_cache_folder') . '/';
 	$folder = preg_replace('#//*#', '/', $folder);
     return $folder;
 }

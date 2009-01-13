@@ -55,31 +55,11 @@ class FunkyCacheController extends PluginController
     }
     
     function settings() {
-    	error_reporting(E_ALL);
-		global $__FROG_CONN__;
-		
-		/* TODO is there an API to retrieve settings? */
-    	$sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_by_default'";
-		$stmt = $__FROG_CONN__->prepare($sql);
-		$stmt->execute();
-		$funky_cache_by_default = $stmt->fetchObject();
-		
-		$sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_suffix'";
-		$stmt = $__FROG_CONN__->prepare($sql);
-		$stmt->execute();
-		$funky_cache_suffix = $stmt->fetchObject();
-		
-		$sql = "SELECT * FROM ".TABLE_PREFIX."setting WHERE name = 'funky_cache_folder'";
-		$stmt = $__FROG_CONN__->prepare($sql);
-		$stmt->execute();
-		$funky_cache_folder = $stmt->fetchObject();
-
         $this->display('funky_cache/views/settings', array(
-			'funky_cache_by_default' => $funky_cache_by_default->value,
-			'funky_cache_suffix' => $funky_cache_suffix->value,
-			'funky_cache_folder' => $funky_cache_folder->value
+			'funky_cache_by_default' => Setting::get('funky_cache_by_default'),
+			'funky_cache_suffix' => Setting::get('funky_cache_suffix'),
+			'funky_cache_folder' => Setting::get('funky_cache_folder')
 		));
-		
     }
     
 	function save() {
