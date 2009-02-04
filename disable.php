@@ -15,6 +15,11 @@
 
 $PDO = Record::getConnection();
 
+$cache = Record::findAllFrom('FunkyCachePage');
+foreach ($cache as $page) {
+    $page->delete();
+}
+
 $table = TABLE_PREFIX . "setting";
 $PDO->exec("DELETE FROM $table 
             WHERE name='funky_cache_by_default' 
