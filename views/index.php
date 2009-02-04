@@ -7,7 +7,7 @@
     <table class="fieldset" cellpadding="0" cellspacing="0" border="0">
     <?php foreach ($cached_page as $page): ?>
         <tr>
-            <td class="field"><?php print $page->url ?></td>
+            <td class="field"><?php print $page->publicUrl() ?></td>
             <td class="field"><?php print DateDifference::getString(new DateTime($page->created_on)); ?></td>
             <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/') . $page->id; ?>"><img src="./images/icon-remove.gif" /></a></td>
         </tr>	

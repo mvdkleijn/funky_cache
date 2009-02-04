@@ -30,6 +30,13 @@ class FunkyCachePage extends Record
     {
         return array('url', 'created_on');
     }
+    
+    public function publicUrl() {
+        $folder = Setting::get('funky_cache_folder') . '/';
+    	$folder = preg_replace('#//*#', '/', $folder);
+    	$folder = preg_replace('#^/#', '', $folder);
+    	return str_replace($folder, '', $this->url);
+    }
         
     public function beforeSave()
     {
