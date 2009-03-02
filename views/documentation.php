@@ -27,7 +27,7 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
 
     # Rewrite index to check for static.
     RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^$ <?php print funky_cache_folder() ?>index.xhtml [L,QSA]
+    RewriteRule ^$ <?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> [L,QSA]
     
     # Rewrite to check for cached page from cached folder.
     RewriteCond %{REQUEST_METHOD} ^GET$
@@ -42,7 +42,11 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-l
     # Main URL rewriting.
+<?php if (version_compare(FROG_VERSION, '0.9.5', '<')) { ?>
     RewriteRule ^(.*)$ index.php?$1 [L,QSA]
+<?php } else { ?>
+    RewriteRule ^(.*)$ index.php?PAGE=$1 [L,QSA]
+<?php } ?>
 &lt;/IfModule&gt;
 <?php } else { ?>
 DirectorySlash Off
@@ -79,7 +83,11 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
 <?php endif; ?>
     RewriteCond %{REQUEST_FILENAME} !-l
     # Main URL rewriting.
+<?php if (version_compare(FROG_VERSION, '0.9.5', '<')) { ?>
     RewriteRule ^(.*)$ index.php?$1 [L,QSA]
+<?php } else { ?>
+    RewriteRule ^(.*)$ index.php?PAGE=$1 [L,QSA]
+<?php } ?>
 &lt;/IfModule&gt;
 
 <?php } ?>

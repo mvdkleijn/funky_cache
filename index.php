@@ -87,9 +87,11 @@ if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
     function funky_cache_create($page) {
         if ($page->funky_cache_enabled) {
             funky_cache_suffix();
-            $data['url'] = "/" . $_SERVER['QUERY_STRING'];
+            #$data['url'] = "/" . $_SERVER['QUERY_STRING'];
+            $data['url'] = "/" . CURRENT_URI . URL_SUFFIX;
+            
             /* Frontpage should become index.html */
-            if ('/' == $data['url']) {
+            if ('/' . URL_SUFFIX == $data['url']) {
                 $data['url'] = '/index' . funky_cache_suffix(); 
             /* If Frog suffix is not used, use suffix from cache settings */
             /* For example /articles becomes /articles.html */

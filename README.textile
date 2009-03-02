@@ -47,6 +47,7 @@ h3. Changelog
 
 h4. 0.3.4
 
+* Fix compatibility issues with 0.9.5 mod_rewrite rules.
 * Show real (not cached) path in admin. 
 * Delete cached pages from harddrive when disabling plugin.
 * Fix sidebar view path for 0.9.5
