@@ -21,6 +21,7 @@ Plugin::setInfos(array(
     'description' => 'Enables funky caching which makes your site ultra fast.', 
     'version'     => '0.3.4', 
     'license'     => 'MIT',
+    'author'      => 'Mika Tuupola',
     'require_frog_version' => '0.9.3',
     'update_url'  => 'http://www.appelsiini.net/download/frog-plugins.xml',
     'website'     => 'http://www.appelsiini.net/'
