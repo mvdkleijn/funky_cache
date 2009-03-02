@@ -42,3 +42,12 @@ Go to shell and create the cache folder and give write access to it.
 Funky Cache depends on correctly setup mod_rewrite rules. Rules are different depending on your Frog and plugin settings. Click _"Your .htaccess file"_ on sidebar. Cut and paste given code to .htaccess file in your document root.
 
 !http://www.appelsiini.net/assets/2008/11/24/funky_htaccess.png!
+
+h3. Changelog
+
+h4. 0.3.4
+
+* Show real (not cached) path in admin. 
+* Delete cached pages from harddrive when disabling plugin.
+* Fix sidebar view path for 0.9.5
+
