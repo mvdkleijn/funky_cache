@@ -22,7 +22,7 @@ class FunkyCacheController extends PluginController
         }
 
         $this->setLayout('backend');
-        if (version_compare(FROG_VERSION, '0.9.5', '<')) {
+        if (version_compare(FROG_VERSION, '0.9.4', '<=')) {
             $this->assignToLayout('sidebar', new View('../../../plugins/funky_cache/views/sidebar'));
         } else {
             $this->assignToLayout('sidebar', new View('../../plugins/funky_cache/views/sidebar'));
