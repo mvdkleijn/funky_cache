@@ -45,6 +45,10 @@ Funky Cache depends on correctly setup mod_rewrite rules. Rules are different de
 
 h3. Changelog
 
+h4. 0.3.5
+
+0.9.5RC2 tried to use wrong views folder. 
+
 h4. 0.3.4
 
 * Fix compatibility issues with 0.9.5 mod_rewrite rules.

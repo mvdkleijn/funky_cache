@@ -19,7 +19,7 @@ Plugin::setInfos(array(
     'id'          => 'funky_cache',
     'title'       => 'Funky Cache', 
     'description' => 'Enables funky caching which makes your site ultra fast.', 
-    'version'     => '0.3.4', 
+    'version'     => '0.3.5', 
     'license'     => 'MIT',
     'author'      => 'Mika Tuupola',
     'require_frog_version' => '0.9.3',
