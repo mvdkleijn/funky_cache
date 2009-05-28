@@ -19,7 +19,7 @@ Plugin::setInfos(array(
     'id'          => 'funky_cache',
     'title'       => 'Funky Cache', 
     'description' => 'Enables funky caching which makes your site ultra fast.', 
-    'version'     => '0.3.5', 
+    'version'     => '0.3.6-dev', 
     'license'     => 'MIT',
     'author'      => 'Mika Tuupola',
     'require_frog_version' => '0.9.3',
@@ -57,6 +57,8 @@ if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
         foreach ($cache as $page) {
             $page->delete();
         }
+        $message = sprintf('Cache was automatically cleared.');
+        Observer::notify('log_event', $message, 7, 'funky_cache');
     }
     
     function funky_cache_show_select($page) {

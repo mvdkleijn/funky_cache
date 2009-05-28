@@ -45,9 +45,13 @@ Funky Cache depends on correctly setup mod_rewrite rules. Rules are different de
 
 h3. Changelog
 
+h4. 0.3.6
+
+* Support for "Dashboard":http://github.com/tuupola/frog_dashboard plugin.
+
 h4. 0.3.5
 
-0.9.5RC2 tried to use wrong views folder. 
+* 0.9.5RC2 tried to use wrong views folder. 
 
 h4. 0.3.4
 
