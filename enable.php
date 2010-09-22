@@ -41,12 +41,26 @@ $PDO->exec("ALTER TABLE $table
 
 $table = TABLE_PREFIX . "funky_cache_page";
 
-$PDO->exec("CREATE TABLE $table (
-            id int(11) NOT NULL auto_increment,
-            url varchar(255) default NULL,
-            created_on datetime default NULL,
-            PRIMARY KEY (id),
-            UNIQUE (url)
-            ) DEFAULT CHARSET=utf8");
+$driver = strtolower($PDO->getAttribute(Record::ATTR_DRIVER_NAME));
+
+if ("mysql" == $driver) {
+    $PDO->exec("CREATE TABLE $table (
+                id int(11) NOT NULL auto_increment,
+                url varchar(255) default NULL,
+                created_on datetime default NULL,
+                PRIMARY KEY (id),
+                UNIQUE (url)
+                ) DEFAULT CHARSET=utf8");    
+}
+
+if ("sqlite" == $driver) {
+    $PDO->exec("CREATE TABLE $table (
+                id INTEGER NOT NULL PRIMARY KEY,
+                url varchar(255) default NULL,
+                created_on datetime default NULL,
+                UNIQUE (url)
+                )");    
+}
+
 
             
