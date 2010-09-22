@@ -58,6 +58,11 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteEngine On
     RewriteBase /
     
+    # Rules to allow install sequence to test for mod_rewrite support
+    RewriteRule ^install/index.html$ install/index.php?rewrite=1 [L,QSA]
+    RewriteRule ^install/index.php$ install/index.php?rewrite=1 [L,QSA]
+    RewriteRule ^install/$ install/index.php?rewrite=1 [L,QSA]
+    
     RewriteCond %{REQUEST_FILENAME} !-f
 <?php if (!funky_cache_folder_is_root()): ?>
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -70,12 +75,17 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
     RewriteRule ^$ <?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> [L,QSA] 
         
+        
     # Rewrite to check for cached page.
     RewriteCond %{REQUEST_METHOD} ^GET$
-    RewriteCond %{REQUEST_URI} (.*)/$ [or]
-    RewriteCond %{REQUEST_URI} (.*)$
+    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI}<?php print funky_cache_suffix() ?> -f
+    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1.html [L,QSA]
+    
+    # Rewrite to check for cached page with trailing slash.
+    RewriteCond %{REQUEST_METHOD} ^GET$
+    RewriteCond %{REQUEST_URI} (.*)/$
     RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%1<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^(.*)/?$ <?php print funky_cache_folder() ?>$1<?php print funky_cache_suffix() ?> [L,QSA]
+    RewriteRule ^(.*)/$ <?php print funky_cache_folder() ?>$1.html [L,QSA]    
 
     RewriteCond %{REQUEST_FILENAME} !-f
 <?php if (!funky_cache_folder_is_root()): ?>
