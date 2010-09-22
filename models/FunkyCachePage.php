@@ -69,7 +69,7 @@ class FunkyCachePage extends Record
     }
     
     public function path() {
-        return $_SERVER['DOCUMENT_ROOT'] . $this->url;
+        return realpath(CMS_ROOT) . $this->url;
     }
     
     public function content() {
