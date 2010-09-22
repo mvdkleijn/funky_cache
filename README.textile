@@ -9,8 +9,8 @@ h3. Install
 Copy files to <i>frog/plugins/funky_cache/</i> folder.
 
 <pre>
-cd frog/plugins/
-git clone git://github.com/tuupola/frog_funky_cache.git funky_cache
+cd wolf/plugins/
+git clone git://github.com/tuupola/wolf_funky_cache.git funky_cache
 </pre>
 
 Open you _config.php_ and make sure the following is set:
@@ -25,7 +25,7 @@ Got to admin and enable Funky Cache plugin.
 
 Reload the admin page to see _"Cache"_ tab appear. Click on the tab to check your settings. 
 
-_Cache file suffix_ is important! It is the suffix of static files written to disk. It should be the same as _URL_SUFFIX_ in Frog config.php.  If your _URL_SUFFIX_ is empty cache file suffix  will default to _.html_.
+_Cache file suffix_ is important! It is the suffix of static files written to disk. It should be the same as _URL_SUFFIX_ in wolf config.php.  If your _URL_SUFFIX_ is empty cache file suffix  will default to _.html_.
 
 _Cache folder_ is the folder where static files are written. Folder is related to document root. If you leave this empty cached files will be written to document root. *Webserver must have write access to cache folder.* 
 
@@ -39,7 +39,7 @@ Go to shell and create the cache folder and give write access to it.
 >chmod a+w cache
 </pre>
 
-Funky Cache depends on correctly setup mod_rewrite rules. Rules are different depending on your Frog and plugin settings. Click _"Your .htaccess file"_ on sidebar. Cut and paste given code to .htaccess file in your document root.
+Funky Cache depends on correctly setup mod_rewrite rules. Rules are different depending on your Wolf and plugin settings. Click _"Your .htaccess file"_ on sidebar. Cut and paste given code to .htaccess file in your document root.
 
 !http://www.appelsiini.net/assets/2008/11/24/funky_htaccess.png!
 
@@ -47,7 +47,9 @@ h3. Changelog
 
 h4. 0.3.6
 
-* Support for "Dashboard":http://github.com/tuupola/frog_dashboard plugin.
+* Support for "Dashboard":http://github.com/tuupola/wolf_dashboard plugin.
+* Support for SQLite3 ("sartas":http://github.com/sartas)
+* Support for urls without trailings slash (/foo/bar) and with trailing slash (/foo/bar/) when not using URL suffix.
 
 h4. 0.3.5
 
