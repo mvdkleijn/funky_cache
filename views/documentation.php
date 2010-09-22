@@ -10,8 +10,9 @@ Caching relies on correctly set mod_rewrite rules. Below is .htaccess file gener
 <code><pre>
 <?php if (trim(URL_SUFFIX)) { ?>
 
-Options +FollowSymLinks
+php_flag magic_quotes_gpc off
 AddDefaultCharset UTF-8
+Options -Indexes +FollowSymLinks
 
 DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
 
@@ -42,17 +43,14 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
     RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-l
     # Main URL rewriting.
-<?php if (version_compare(FROG_VERSION, '0.9.5', '<')) { ?>
-    RewriteRule ^(.*)$ index.php?$1 [L,QSA]
-<?php } else { ?>
-    RewriteRule ^(.*)$ index.php?PAGE=$1 [L,QSA]
-<?php } ?>
+    RewriteRule ^(.*)$ index.php?WOLFPAGE=$1 [L,QSA]
 &lt;/IfModule&gt;
 <?php } else { ?>
 DirectorySlash Off
 
-Options +FollowSymLinks
+php_flag magic_quotes_gpc off
 AddDefaultCharset UTF-8
+Options -Indexes +FollowSymLinks
 
 DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
 
@@ -74,8 +72,10 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
         
     # Rewrite to check for cached page.
     RewriteCond %{REQUEST_METHOD} ^GET$
-    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI}<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1<?php print funky_cache_suffix() ?> [L,QSA]
+    RewriteCond %{REQUEST_URI} (.*)/$ [or]
+    RewriteCond %{REQUEST_URI} (.*)$
+    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%1<?php print funky_cache_suffix() ?> -f
+    RewriteRule ^(.*)/?$ <?php print funky_cache_folder() ?>$1<?php print funky_cache_suffix() ?> [L,QSA]
 
     RewriteCond %{REQUEST_FILENAME} !-f
 <?php if (!funky_cache_folder_is_root()): ?>
@@ -83,11 +83,7 @@ DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
 <?php endif; ?>
     RewriteCond %{REQUEST_FILENAME} !-l
     # Main URL rewriting.
-<?php if (version_compare(FROG_VERSION, '0.9.5', '<')) { ?>
-    RewriteRule ^(.*)$ index.php?$1 [L,QSA]
-<?php } else { ?>
-    RewriteRule ^(.*)$ index.php?PAGE=$1 [L,QSA]
-<?php } ?>
+    RewriteRule ^(.*)$ index.php?WOLFPAGE=$1 [L,QSA]
 &lt;/IfModule&gt;
 
 <?php } ?>
