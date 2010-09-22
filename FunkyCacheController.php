@@ -52,7 +52,7 @@ class FunkyCacheController extends PluginController
         }
         Flash::set('success', 'Should have cleared cache.');
         $message = sprintf('Cache was cleared by :username.');
-        Observer::notify('log_event', $message, 5, 'funky_cache');
+        Observer::notify('log_event', $message, 'funky_cache', 5);
         redirect(get_url('plugin/funky_cache/'));   
     }
     
@@ -93,11 +93,11 @@ class FunkyCacheController extends PluginController
         if ($success_1 && $success_2 && $success_3){
             Flash::set('success', __('The settings have been updated.'));
             $message = sprintf('Cache settings were updated by :username.');
-            Observer::notify('log_event', $message, 5, 'funky_cache');
+            Observer::notify('log_event', $message, 'funky_cache', 5);
         } else {
             Flash::set('error', 'An error has occured.');
             $message = sprintf('Updating cache settings by :username failed.');
-            Observer::notify('log_event', $message, 2, 'funky_cache');
+            Observer::notify('log_event', $message, 'funky_cache', 2);
         }
         redirect(get_url('plugin/funky_cache/settings'));   
 	}

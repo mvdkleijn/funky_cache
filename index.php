@@ -64,7 +64,7 @@ if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
             $page->delete();
         }
         $message = sprintf('Cache was automatically cleared.');
-        Observer::notify('log_event', $message, 7, 'funky_cache');
+        Observer::notify('log_event', $message, 'funky_cache', 7);
     }
     
     function funky_cache_show_select($page) {
