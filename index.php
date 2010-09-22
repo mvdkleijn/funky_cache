@@ -40,6 +40,12 @@ if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
     Observer::observe('page_delete',            'funky_cache_delete_all');
     Observer::observe('view_page_edit_plugins', 'funky_cache_show_select');
     
+    Observer::observe('comment_after_add',       'funky_cache_delete_all');
+    Observer::observe('comment_after_edit',      'funky_cache_delete_all');
+    Observer::observe('comment_after_delete',    'funky_cache_delete_all');
+    Observer::observe('comment_after_approve',   'funky_cache_delete_all');
+    Observer::observe('comment_after_unapprove', 'funky_cache_delete_all');
+    
     /* These currently only work in MIT fork of Frog. */
     Observer::observe('layout_after_edit',      'funky_cache_delete_all');
     Observer::observe('snippet_after_edit',     'funky_cache_delete_all');
@@ -83,7 +89,9 @@ if ('/admin/index.php' == $_SERVER['PHP_SELF']) {
     Observer::observe('page_requested',       'funky_cache_debug');
 
     function funky_cache_debug($page) {
-       //print "-" . $_SERVER['QUERY_STRING'] . "-";
+        if (DEBUG) {
+            print "Cache miss...";            
+        }
     }
 
     function funky_cache_create($page) {
