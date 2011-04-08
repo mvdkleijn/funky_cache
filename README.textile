@@ -1,3 +1,7 @@
+h3. Current status
+
+The funky cache plugin for Wolf CMS was originally created by "tuupola":http://github.com/tuupola. I took over maintainership for the plugin on his request since he no longer has time to work on it.
+
 h3. Speed
 
 Following chart show number of requests per second on a test server. Three bars represent Frog installation with no caching, with "File Cache plugin":http://www.antistatique.net/blog/index.php/post/cache-plugin-frogcms installed and with Funky Cache plugin installed. More accurate numbers in "speed comparison":http://www.appelsiini.net/2008/11/ultrafast-frog-with-funky-cache blog post.
