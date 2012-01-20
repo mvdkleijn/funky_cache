@@ -1,3 +1,16 @@
+<?php
+/*
+ * Funky Cache plugin for Wolf CMS. <http://www.wolfcms.org>
+ * 
+ * Copyright (C) 2012 Martijn van der Kleijn <martijn.niji@gmail.com>
+ * Copyright (c) 2008-2009 Mika Tuupola
+ *
+ * This file is part of the Funky Cache plugin for Wolf CMS. It is licensed
+ * under the MIT license.
+ * 
+ * For details, see:  http://www.opensource.org/licenses/mit-license.php
+ */
+?>
 <h1>Funky Cache Plugin</h1>
 <p>
 Current documentation available at <a href="http://www.appelsiini.net/projects/funky_cache">plugin homepage</a>.

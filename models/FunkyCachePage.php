@@ -1,77 +1,85 @@
 <?php
 
 /*
- * Funky Cache - Frog CMS caching plugin
- *
+ * Funky Cache plugin for Wolf CMS. <http://www.wolfcms.org>
+ * 
+ * Copyright (C) 2012 Martijn van der Kleijn <martijn.niji@gmail.com>
  * Copyright (c) 2008-2009 Mika Tuupola
  *
- * Licensed under the MIT license:
- *   http://www.opensource.org/licenses/mit-license.php
- *
- * Project home:
- *   http://www.appelsiini.net/projects/funky_cache
- *
+ * This file is part of the Funky Cache plugin for Wolf CMS. It is licensed
+ * under the MIT license.
+ * 
+ * For details, see:  http://www.opensource.org/licenses/mit-license.php
  */
 
-if (!class_exists('Record')) {
-    require_once dirname(__FILE__) . '/Record.php';    
-}
-
-
-class FunkyCachePage extends Record 
-{
+/**
+ * The Funky Cache plugin provides caching functionality for Wolf CMS.
+ *
+ * @package wolf
+ * @subpackage plugin.funky_cache
+ *
+ * @author Martijn van der Kleijn <martijn.niji@gmail.com>
+ * @author Mika Tuupola
+ * @copyright Martijn van der Kleijn, 2012
+ * @copyright Mika Tuupola, 2008-2009
+ * @license http://www.opensource.org/licenses/mit-license.php MIT license
+ */
+class FunkyCachePage extends Record {
     const TABLE_NAME = 'funky_cache_page';
-    
-    public  $url;
-    public  $created_on;
-    public  $page;
 
-    public function getColumns()
-    {
+    public $url;
+    public $created_on;
+    public $page;
+
+
+    public function getColumns() {
         return array('url', 'created_on');
     }
-    
+
+
     public function publicUrl() {
-        $folder = Setting::get('funky_cache_folder') . '/';
-    	$folder = preg_replace('#//*#', '/', $folder);
-    	$folder = preg_replace('#^/#', '', $folder);
-    	return str_replace($folder, '', $this->url);
+        $folder = Setting::get('funky_cache_folder').'/';
+        $folder = preg_replace('#//*#', '/', $folder);
+        $folder = preg_replace('#^/#', '', $folder);
+        return str_replace($folder, '', $this->url);
     }
-        
-    public function beforeSave()
-    {
+
+
+    public function beforeSave() {
         $this->created_on = date('Y-m-d H:i:s');
         /* If directories do not exist create them. */
         $parts = explode('/', $this->path());
-        $file  = array_pop($parts);
+        $file = array_pop($parts);
 
         /* If deep link create directories when needed. */
         $dir = '';
-        foreach($parts as $part) {
-            if(!is_dir($dir .= "/$part")) {
+        foreach ($parts as $part) {
+            if (!is_dir($dir .= "/$part")) {
                 mkdir($dir);
             }
         }
         /* Fix case when articles.html is created before articles/ */
         /* TODO This still creates on extra directory in the end.  */
         if (('archive' == $this->page->behavior_id) || ($this->page instanceof PageArchive)) {
-            $dir .= '/' . basename($file, funky_cache_suffix());
-            if(!is_dir($dir)) {
+            $dir .= '/'.basename($file, funky_cache_suffix());
+            if (!is_dir($dir)) {
                 mkdir($dir);
             }
         }
         return file_put_contents($this->path(), $this->content(), LOCK_EX);
     }
 
-    public function beforeDelete()
-    {
+
+    public function beforeDelete() {
         return @unlink($this->path());
     }
-    
+
+
     public function path() {
-        return realpath(CMS_ROOT) . $this->url;
+        return realpath(CMS_ROOT).$this->url;
     }
-    
+
+
     public function content() {
         ob_start();
         $this->page->_executeLayout();
@@ -79,6 +87,6 @@ class FunkyCachePage extends Record
         ob_end_clean();
         return $output;
     }
-    
+
 }
 
