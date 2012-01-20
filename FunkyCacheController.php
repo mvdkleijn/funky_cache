@@ -40,7 +40,7 @@ class FunkyCacheController extends PluginController {
 
     function index() {
         $this->display('funky_cache/views/index', array(
-            'cached_page' => FunkyCachePage::findAllFrom('FunkyCachePage', '1=1 ORDER BY created_on ASC')
+            'pages' => FunkyCachePage::findAllFrom('FunkyCachePage', '1=1 ORDER BY created_on ASC')
         ));
     }
 
@@ -86,7 +86,6 @@ class FunkyCacheController extends PluginController {
 
 
     function save() {
-        error_reporting(E_ALL);
 
         /* Setting::saveFromData() does not handle any errors so lets save manually. */
         $pdo = Record::getConnection();
