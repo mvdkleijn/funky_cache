@@ -32,6 +32,10 @@ class FunkyCacheController extends PluginController {
         if (!(AuthUser::isLoggedIn())) {
             redirect(get_url('login'));
         }
+        
+        if (!AuthUser::hasPermission('admin_view')) {
+            redirect(URL_PUBLIC);
+        }
 
         $this->setLayout('backend');
         $this->assignToLayout('sidebar', new View('../../plugins/funky_cache/views/sidebar'));
@@ -53,23 +57,33 @@ class FunkyCacheController extends PluginController {
     function delete($id) {
         $cached_page = FunkyCachePage::findByIdFrom('FunkyCachePage', $id);
         if ($cached_page->delete()) {
-            Flash::set('success', 'Page deleted from cache.');
+            Flash::set('success', 'Page was deleted from cache.');
         }
         else {
-            Flash::set('error', 'Could not delete cached page. Try manually from commandline.');
+            Flash::set('error', 'The cached page could not be deleted. Try manually from the commandline.');
         }
+        $message = sprintf('Single cache entry was deleted by :username.');
+        Observer::notify('log_event', $message, 'funky_cache', 5);
         redirect(get_url('plugin/funky_cache/'));
     }
 
 
     function clear() {
-
+        $error = false;
         // We need to delete them one by one to make sure the filesystem is cleaned too.
         $pages = Record::findAllFrom('FunkyCachePage');
         foreach ($pages as $page) {
-            $page->delete();
+            if (!$page->delete()) {
+                $error = true;
+            }
         }
-        Flash::set('success', 'Should have cleared cache.');
+        
+        if ($error === false) {
+            Flash::set('success', 'Cache cleared successfully.');
+        }
+        else {
+            Flash::set('error', 'One or more cached pages could not be deleted. Try manually from the commandline.');
+        }
         $message = sprintf('Cache was cleared by :username.');
         Observer::notify('log_event', $message, 'funky_cache', 5);
         redirect(get_url('plugin/funky_cache/'));
@@ -77,47 +91,30 @@ class FunkyCacheController extends PluginController {
 
 
     function settings() {
+        $settings = Plugin::getAllSettings('funky_cache');
+
         $this->display('funky_cache/views/settings', array(
-            'funky_cache_by_default' => Setting::get('funky_cache_by_default'),
-            'funky_cache_suffix' => Setting::get('funky_cache_suffix'),
-            'funky_cache_folder' => Setting::get('funky_cache_folder')
+            'funky_cache_by_default' => $settings['funky_cache_by_default'],
+            'funky_cache_suffix' => $settings['funky_cache_suffix'],
+            'funky_cache_folder' => $settings['funky_cache_folder']
         ));
     }
 
 
     function save() {
-
-        /* Setting::saveFromData() does not handle any errors so lets save manually. */
-        $pdo = Record::getConnection();
-        $table = TABLE_PREFIX.'setting';
-
-        $funky_cache_by_default = $pdo->quote($_POST['funky_cache_by_default']);
-        $funky_cache_suffix = $pdo->quote($_POST['funky_cache_suffix']);
-        $funky_cache_folder = $pdo->quote($_POST['funky_cache_folder']);
-
-        $query = "UPDATE $table 
-                  SET value  = $funky_cache_suffix
-                  WHERE name = 'funky_cache_suffix'";
-        $success_1 = $pdo->exec($query) !== false;
-
-        $query = "UPDATE $table 
-                  SET value  = $funky_cache_by_default 
-                  WHERE name = 'funky_cache_by_default'";
-        $success_2 = $pdo->exec($query) !== false;
-
-        $query = "UPDATE $table 
-                  SET value  = $funky_cache_folder
-                  WHERE name = 'funky_cache_folder'";
-        $success_3 = $pdo->exec($query) !== false;
-
-        if ($success_1 && $success_2 && $success_3) {
-            Flash::set('success', __('The settings have been updated.'));
-            $message = sprintf('Cache settings were updated by :username.');
+        $settings = array();
+        $settings['funky_cache_by_default'] = $_POST['funky_cache_by_default'];
+        $settings['funky_cache_suffix'] = $_POST['funky_cache_suffix'];
+        $settings['funky_cache_folder'] = $_POST['funky_cache_folder'];
+        
+        if (Plugin::setAllSettings($settings, 'funky_cache')) {
+            Flash::set('success', __('The cache settings have been updated.'));
+            $message = sprintf('The cache settings were updated by :username.');
             Observer::notify('log_event', $message, 'funky_cache', 5);
         }
         else {
-            Flash::set('error', 'An error has occured.');
-            $message = sprintf('Updating cache settings by :username failed.');
+            Flash::set('error', 'The cache settings could not be updated due to an error.');
+            $message = sprintf('An attempt by :username to update the cache settings failed.');
             Observer::notify('log_event', $message, 'funky_cache', 2);
         }
         redirect(get_url('plugin/funky_cache/settings'));

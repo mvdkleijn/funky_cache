@@ -12,7 +12,7 @@
  * For details, see:  http://www.opensource.org/licenses/mit-license.php
  */
 
-require_once 'models/FunkyCachePage.php';
+//require_once 'models/FunkyCachePage.php';
 
 Plugin::setInfos(array(
     'id' => 'funky_cache',
@@ -25,6 +25,8 @@ Plugin::setInfos(array(
     'update_url' => 'http://www.appelsiini.net/download/frog-plugins.xml',
     'website' => 'http://www.appelsiini.net/'
 ));
+
+AutoLoader::addFolder(PLUGINS_ROOT.'/funky_cache/models');
 
 /* Stuff for backend. */
 if (defined('CMS_BACKEND')) {

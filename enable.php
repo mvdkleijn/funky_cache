@@ -12,9 +12,9 @@
  * For details, see:  http://www.opensource.org/licenses/mit-license.php
  */
  
-/* Prevent direct access. */
-if (!defined("FRAMEWORK_STARTING_MICROTIME")) {
-    die("All your base are belong to us!");
+/* Security measure */
+if (!defined('IN_CMS')) {
+    exit();
 }
  
 $PDO = Record::getConnection();
