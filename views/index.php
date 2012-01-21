@@ -21,7 +21,7 @@
                 <tr>
                     <td class="field"><?php print $page->publicUrl() ?></td>
                     <td class="field"><?php print DateDifference::getString(new DateTime($page->created_on)); ?></td>
-                    <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/').$page->id; ?>"><img src="<?php echo ICONS_URI;?>/delete-16.png" /></a></td>
+                    <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/').$page->id; ?>"><img src="<?php echo ICONS_URI;?>/delete-16.png" title="Delete this cached page." /></a></td>
                 </tr>	
             <?php endforeach; ?>
         </table>

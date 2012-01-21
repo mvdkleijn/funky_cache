@@ -11,103 +11,38 @@
  * For details, see:  http://www.opensource.org/licenses/mit-license.php
  */
 ?>
-<h1>Funky Cache Plugin</h1>
+<h1><?php echo __('Funky Cache - Example rewrite rules');?></h1>
+
+<h2><?php echo __('Introduction');?></h2>
 <p>
-Current documentation available at <a href="http://www.appelsiini.net/projects/funky_cache">plugin homepage</a>.
+    <?php echo __('The Funky Cache plugin works by using mod_rewrite or equivalent rewrite functionality. Below you will find generated examples for the most used HTTP servers.');?>
+    <?php echo __('Please be aware the author of this plugin cannot guarantee the accuracy of these examples and does not know all rewrite systems.');?>
 </p>
 <p>
-<h3>Rewrite Rules</h3>
+    <?php echo __('Always check the plugin settings after enabling it!');?>
+</p>
+
+<h2>Apache</h2>
 <p>
-Caching relies on correctly set mod_rewrite rules. Below is .htaccess file generated according to your settings.
+    Caching relies on correctly set mod_rewrite rules. The section below is the set of mod_rewrite rules you should place in your
+    .htaccess file. It was generated based on your settings.
+</p>
+<p>
+    You should place these rules <strong>before</strong> the standard Wolf CMS rules and <strong>after</strong> the RewriteBase line.
 </p>
 <code><pre>
-<?php if (trim(URL_SUFFIX)) { ?>
+  # Check for cached index page from static cache folder.
+  RewriteCond %{REQUEST_METHOD} ^GET$
+  RewriteCond %{REQUEST_URI} ^<?php echo URI_PUBLIC; ?>$
+  RewriteCond %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?> -s
+  RewriteRule ^$ %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?> [L]
 
-php_flag magic_quotes_gpc off
-AddDefaultCharset UTF-8
-Options -Indexes +FollowSymLinks
-
-DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
-
-&lt;IfModule mod_rewrite.c&gt;
-    RewriteEngine On
-    RewriteBase /
-
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-l
-    # Administration URL rewriting.
-    RewriteRule ^admin(.*)$ admin/index.php?$1 [L,QSA]
-
-    # Rewrite index to check for static.
-    RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^$ <?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> [L,QSA]
-    
-    # Rewrite to check for cached page from cached folder.
-    RewriteCond %{REQUEST_METHOD} ^GET$
-    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI} -f
-<?php if (funky_cache_folder_is_root()): ?>
-    RewriteRule ^(.*)$ $1 [L,QSA]
-<?php else: ?>
-    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1 [L,QSA]
-<?php endif; ?>
-        
-    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
-    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
-    RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-l
-    # Main URL rewriting.
-    RewriteRule ^(.*)$ index.php?WOLFPAGE=$1 [L,QSA]
-&lt;/IfModule&gt;
-<?php } else { ?>
-DirectorySlash Off
-
-php_flag magic_quotes_gpc off
-AddDefaultCharset UTF-8
-Options -Indexes +FollowSymLinks
-
-DirectoryIndex index<?php print funky_cache_suffix() ?> index.php
-
-&lt;IfModule mod_rewrite.c&gt;
-    RewriteEngine On
-    RewriteBase /
-    
-    # Rules to allow install sequence to test for mod_rewrite support
-    RewriteRule ^install/index.html$ install/index.php?rewrite=1 [L,QSA]
-    RewriteRule ^install/index.php$ install/index.php?rewrite=1 [L,QSA]
-    RewriteRule ^install/$ install/index.php?rewrite=1 [L,QSA]
-    
-    RewriteCond %{REQUEST_FILENAME} !-f
-<?php if (!funky_cache_folder_is_root()): ?>
-    RewriteCond %{REQUEST_FILENAME} !-d
-<?php endif; ?>
-    RewriteCond %{REQUEST_FILENAME} !-l
-    # Administration URL rewriting.
-    RewriteRule ^admin(.*)$ admin/index.php?$1 [L,QSA]
-
-    # Rewrite index to check for static.
-    RewriteCond  %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^$ <?php print funky_cache_folder() ?>index<?php print funky_cache_suffix() ?> [L,QSA] 
-        
-        
-    # Rewrite to check for cached page.
-    RewriteCond %{REQUEST_METHOD} ^GET$
-    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%{REQUEST_URI}<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^(.*)$ <?php print funky_cache_folder() ?>$1.html [L,QSA]
-    
-    # Rewrite to check for cached page with trailing slash.
-    RewriteCond %{REQUEST_METHOD} ^GET$
-    RewriteCond %{REQUEST_URI} (.*)/$
-    RewriteCond %{DOCUMENT_ROOT}<?php print funky_cache_folder() ?>%1<?php print funky_cache_suffix() ?> -f
-    RewriteRule ^(.*)/$ <?php print funky_cache_folder() ?>$1.html [L,QSA]    
-
-    RewriteCond %{REQUEST_FILENAME} !-f
-<?php if (!funky_cache_folder_is_root()): ?>
-    RewriteCond %{REQUEST_FILENAME} !-d
-<?php endif; ?>
-    RewriteCond %{REQUEST_FILENAME} !-l
-    # Main URL rewriting.
-    RewriteRule ^(.*)$ index.php?WOLFPAGE=$1 [L,QSA]
-&lt;/IfModule&gt;
-
-<?php } ?>
+  # Check for other cached pages from static cache folder.
+  RewriteCond %{REQUEST_METHOD} ^GET$
+  RewriteCond %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?>%{REQUEST_URI} -s
+  RewriteRule (.*) %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?>%{REQUEST_URI} [L]
 </pre></code>
+
+<p>
+    <?php echo __('If you have translated the Apache mod_rewrite rules to another platform, please let the maintainer of this plugin know.');?>
+</p>
