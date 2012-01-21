@@ -30,7 +30,7 @@ define('USE_MOD_REWRITE', true);
 
 Go to the Wolf CMS admin interface and enable the Funky Cache plugin.
 
-!http://www.appelsiini.net/assets/2008/11/21/funky_enable.png!
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-admin-bar.png!
 
 A _"Cache"_ tab should appear after enabling the plugin. Click on the tab and check your settings. 
 
@@ -38,7 +38,7 @@ _Cache file suffix_ is important! It is the suffix of static files written to di
 
 _Cache folder_ is the folder where the static files are written. The folder is relative to the document root of your web server. If you leave this empty, cached files will be written to the document root of your web server. *The web server MUST have write access to the cache folder.* 
 
-!http://www.appelsiini.net/assets/2008/11/25/funky_settings.png!
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-settings.png!
 
 Go to the shell (or your FTP client) and create the cache folder and give the web server write access to it. For example:
 
@@ -50,7 +50,7 @@ Go to the shell (or your FTP client) and create the cache folder and give the we
 
 Funky Cache depends on correctly set up mod_rewrite rules. The rules are different depending on your Wolf CMS and plugin settings. Click on _"Example rewrite rules"_ in the plugin's sidebar. Cut and paste the given code for your web server to the .htaccess file (or its equivalent) in your document root.
 
-!http://www.appelsiini.net/assets/2008/11/24/funky_htaccess.png!
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-rules.png!
 
 h3. Changelog
 
