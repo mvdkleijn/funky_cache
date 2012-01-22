@@ -33,7 +33,6 @@
 <code><pre>
   # Check for cached index page from static cache folder.
   RewriteCond %{REQUEST_METHOD} ^GET$
-  RewriteCond %{REQUEST_URI} ^<?php echo URI_PUBLIC; ?>$
   RewriteCond %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?> -s
   RewriteRule ^$ %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?> [L]
 
