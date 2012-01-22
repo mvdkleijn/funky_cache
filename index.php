@@ -88,7 +88,7 @@ else {
     /* Stuff for frontend. */
 
     Observer::observe('page_found', 'funky_cache_create');
-    Observer::observe('page_requested', 'funky_cache_debug');
+    //Observer::observe('page_requested', 'funky_cache_debug');
 
 
     function funky_cache_debug($page) {
@@ -114,27 +114,27 @@ else {
             if (!($cache = FunkyCachePage::findOneFrom('FunkyCachePage', 'url=?', array($data['url'])))) {
                 $cache = new FunkyCachePage($data);
             }
+            
             $cache->page = $page;
             $cache->save();
         }
-        //}
     }
 
 }
 
 
 function funky_cache_suffix() {
-    return Setting::get('funky_cache_suffix');
+    return Plugin::getSetting('funky_cache_suffix', 'funky_cache');
 }
 
 
 function funky_cache_by_default() {
-    return Setting::get('funky_cache_by_default');
+    return Plugin::getSetting('funky_cache_by_default', 'funky_cache');
 }
 
 
 function funky_cache_folder() {
-    $folder = '/'.Setting::get('funky_cache_folder').'/';
+    $folder = '/'.Plugin::getSetting('funky_cache_folder', 'funky_cache').'/';
     $folder = preg_replace('#//*#', '/', $folder);
     return $folder;
 }
