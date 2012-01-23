@@ -16,22 +16,15 @@
 if (!defined('IN_CMS')) {
     exit();
 }
+
+$settings = array();
+$settings['funky_cache_by_default'] = '1';
+$settings['funky_cache_suffix'] = '.html';
+$settings['funky_cache_folder'] = '/cache/';
+        
+Plugin::setAllSettings($settings, 'funky_cache');
  
 $PDO = Record::getConnection();
-
-$table = TABLE_PREFIX . "setting";
-$PDO->exec("INSERT INTO $table (name, value) 
-            VALUES ('funky_cache_by_default', '1')");
-
-/* Use system suffix for cache files.        */
-/* If no suffix is set use .html by default. */
-$suffix = trim(URL_SUFFIX) ? URL_SUFFIX : ".html";
-$PDO->exec("INSERT INTO $table (name, value) 
-            VALUES ('funky_cache_suffix', '$suffix')");
-
-/* By default write static files to document root. */
-$PDO->exec("INSERT INTO $table (name, value) 
-            VALUES ('funky_cache_folder', '/cache/')");
                     
 $table = TABLE_PREFIX . "page";
 $PDO->exec("ALTER TABLE $table
