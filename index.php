@@ -21,7 +21,7 @@ Plugin::setInfos(array(
     'version' => '0.4.0',
     'license' => 'MIT',
     'author' => 'Mika Tuupola & Martijn van der Kleijn',
-    'require_wolf_version' => '0.7.5',
+    'require_wolf_version' => '0.7.5+',
     //'update_url' => 'http://www.appelsiini.net/download/frog-plugins.xml',
     'website' => 'http://vanderkleijn.net/'
 ));
@@ -33,7 +33,7 @@ if (defined('CMS_BACKEND')) {
 
     AutoLoader::addFolder(dirname(__FILE__).'/lib');
 
-    Plugin::addController('funky_cache', 'Cache');
+    Plugin::addController('funky_cache', __('Cache'), "admin_view", true);
 
     #Observer::observe('page_edit_after_save',   'funky_cache_delete_one');
     Observer::observe('page_edit_after_save', 'funky_cache_delete_all');
