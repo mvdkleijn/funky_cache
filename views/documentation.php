@@ -42,6 +42,26 @@
   RewriteRule (.*) %{DOCUMENT_ROOT}<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?>%{REQUEST_URI} [L]
 </pre></code>
 
+<h2>Nginx</h2>
 <p>
-    <?php echo __('If you have translated the Apache mod_rewrite rules to another platform, please let the maintainer of this plugin know.');?>
+    Caching relies on correctly set HttpRewriteModule rules. The section below is the set of HttpRewriteModule rules you should place in your
+    config file. It was generated based on your settings.
+</p>
+<p>
+    You should place these rules <strong>before</strong> the standard Wolf CMS rules.
+</p>
+<code><pre>
+  # Check for cached index page from static cache folder.
+  if (-f $document_root<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?>) {
+      rewrite ^/$ <?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?><?php echo URI_PUBLIC; ?>index<?php echo funky_cache_suffix(); ?> last;
+  }
+
+  # Check for other cached pages from static cache folder.
+  if (-f $document_root<?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?>$request_uri) {
+      rewrite (.*) <?php echo URI_PUBLIC; ?><?php echo trim(funky_cache_folder(), '/'); ?>$request_uri last;
+  }
+</pre></code>
+
+<p>
+    <?php echo __('If you have translated the rewrite rules to another platform, please let the maintainer of this plugin know.');?>
 </p>
