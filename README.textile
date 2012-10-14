@@ -54,6 +54,11 @@ Funky Cache depends on correctly set up mod_rewrite rules. The rules are differe
 
 h3. Changelog
 
+h4. 0.4.1
+
+* Fixed small issue with regards to tab being displayed (thanks chrisgo)
+* Added nginx rewrite rules to documentation screen (thanks marvind)
+
 h4. 0.4.0
 
 * Support for root and non-root sites.

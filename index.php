@@ -18,7 +18,7 @@ Plugin::setInfos(array(
     'id' => 'funky_cache',
     'title' => 'Funky Cache',
     'description' => 'Enables funky caching, making your site ultra fast.',
-    'version' => '0.4.0',
+    'version' => '0.4.1',
     'license' => 'MIT',
     'author' => 'Mika Tuupola & Martijn van der Kleijn',
     'require_wolf_version' => '0.7.5+',
