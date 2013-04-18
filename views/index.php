@@ -1,13 +1,13 @@
 <?php
 /*
  * Funky Cache plugin for Wolf CMS. <http://www.wolfcms.org>
- * 
+ *
  * Copyright (C) 2012 Martijn van der Kleijn <martijn.niji@gmail.com>
  * Copyright (c) 2008-2009 Mika Tuupola
  *
  * This file is part of the Funky Cache plugin for Wolf CMS. It is licensed
  * under the MIT license.
- * 
+ *
  * For details, see:  http://www.opensource.org/licenses/mit-license.php
  */
 ?>
@@ -21,8 +21,8 @@
                 <tr>
                     <td class="field"><?php print $page->publicUrl() ?></td>
                     <td class="field"><?php print DateDifference::getString(new DateTime($page->created_on)); ?></td>
-                    <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/').$page->id; ?>"><img src="<?php echo ICONS_URI;?>/delete-16.png" title="Delete this cached page." /></a></td>
-                </tr>	
+                    <td class="field"><a href="<?php echo get_url('plugin/funky_cache/delete/').$page->id; ?>"><img src="<?php echo PLUGINS_URI; ?>/funky_cache/images/delete.png" title="Delete this cached page." /></a></td>
+                </tr>
             <?php endforeach; ?>
         </table>
     </fieldset>
