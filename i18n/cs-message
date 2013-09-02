@@ -1,0 +1,59 @@
+<?php
+
+    /**
+* Language file for plugin funky_cache
+*
+* @package Plugins
+* @subpackage funky_cache
+*
+* @author @frontenderch
+* @version Wolf 0.7.7
+*/
+
+    return array(
+        // index.php
+        'Cache' => 'Mezipam?ti',
+        'Should cache' => 'Pokud mezipam?ti',
+
+        // views/index.php
+        'Funky Cache' => 'Funky Cache',
+        'Cached pages' => 'stránky z cache',
+        'Clear all' => 'Vymazat všechny',
+
+        // views/documentation.php
+        'Funky Cache - Example rewrite rules' => 'Funky Cache - pravidla P?íklady p?episující',
+        'Introduction' => 'Úvod',
+        'The Funky Cache plugin works by using mod_rewrite or equivalent rewrite functionality. Below you will find generated examples for the most used HTTP servers.' => 'Funky Cache zásuvný modul pomocí mod_rewrite nebo ekvivalentní p?epsat funk?nost. Níže najdete generované p?íklady nejpoužívan?jších server? HTTP.',
+        'Please be aware the author of this plugin cannot guarantee the accuracy of these examples and does not know all rewrite systems.' => 'Uv?domte si prosím, autor tohoto pluginu nem?že ru?it za jejich správnost t?chto p?íklad? a nemusí znát všechny p?episující systém.',
+        'Always check the plugin settings after enabling it!' => 'Vždy zkontrolujte, zda je plugin nastavení po zapnutí to!',
+        'If you have translated the rewrite rules to another platform, please let the maintainer of this plugin know.' => 'Pokud jste p?ekládali pravidel pro p?epis na jinou platformu, dejte správcem tohoto pluginu v?d?t.',
+
+        // views/settings.php
+        'Funky Cache Plugin' => 'Funky Cache Plugin',
+        'Cache settings' => 'Nastavení mezipam?ti',
+        'Cache by default' => 'Cache standardn?',
+        'Yes' => 'Ano',
+        'No' => 'Ne',
+        'Choose yes if you want your pages to be cached by default. Otherwise you must set caching for each page manually.' => 'Zvolte Ano, pokud chcete, aby vaše stránky do mezipam?ti ve výchozím nastavení. V opa?ném p?ípad? musíte nastavit ukládání do mezipam?ti pro každou stránku ru?n?.',
+        'Cache file suffix' => 'Cache P?ípona souboru',
+        'Suffix for cache files written to disk. If you use other than .html you also need to update your mod_rewrite rules.' => 'P?ípona pro soubory vyrovnávací pam?ti zapsány na disk. Pokud používáte jiné než HTML. Musíte také aktualizovat mod_rewrite pravidla.',
+        'Cache folder' => 'Cache složka',
+        'Folder where static cache files are written. Relative to document root. When you change this you also need to update your mod_rewrite rules.' => 'Složku, kde jsou zapsány statické soubory mezipam?ti. Relativní na ko?en dokumentu. Zm?níte-li toto musíte také aktualizovat mod_rewrite pravidla.',
+        'Save' => 'uložit',
+
+        // views/sidebar.php
+        'Example rewrite rules' => 'P?íklad pravidla p?episování',
+        'Settings' => 'Nastavení',
+        'About Funky Cache' => 'O Funky Cache',
+        'The Funky Cache plugin allows you to cache pages on the filesystem. It works by using mod_rewrite or equivalent rewrite functionality.' => 'Funky Cache plugin umož?uje mezipam?ti stránky na souborový systém. Funguje tak, že pomocí mod_rewrite nebo ekvivalentní p?epsat funk?nost.',
+        'Homepage' => 'Úvodní stránka',
+
+        // FunkyCacheController.php
+        'Page was deleted from cache.' => 'Stránka byla odstran?na z mezipam?ti.',
+        'The cached page could not be deleted. Try manually from the commandline.' => 'Stránky uložené v mezipam?ti nelze odstranit. Zkuste ru?n? z p?íkazové ?ádky.',
+        'Cache cleared successfully.' => 'Cache úsp?šn? vymazána.',
+        'One or more cached pages could not be deleted. Try manually from the commandline.' => 'Jeden nebo více stránek mezipam?ti nelze odstranit. Zkuste ru?n? z p?íkazové ?ádky.',
+        'The cache settings have been updated.' => 'Nastavení mezipam?ti byly aktualizovány.',
+        'The cache settings could not be updated due to an error.' => 'Nastavení mezipam?ti nelze aktualizovat kv?li chyb?. ',
+
+    );
