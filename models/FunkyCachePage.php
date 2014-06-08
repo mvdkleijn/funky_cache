@@ -48,25 +48,16 @@ class FunkyCachePage extends Record {
     public function beforeSave() {
         $this->created_on = date('Y-m-d H:i:s');
         /* If directories do not exist create them. */
-        $parts = explode('/', $this->path());
+        $parts = explode('/', trim($this->path(),'/'));
         $file = array_pop($parts);
 
         /* If deep link create directories when needed. */
-        $dir = '';
-        foreach ($parts as $part) {
-            if (!is_dir($dir .= "/$part")) {
-                mkdir($dir);
-            }
+        $dir = '/' . implode('/',$parts);
+        if (!is_dir($dir)) {
+            mkdir($dir,0755,true);
         }
-        /* Fix case when articles.html is created before articles/ */
-        /* TODO This still creates on extra directory in the end.  */
-        if (('archive' == $this->page->behavior_id) || ($this->page instanceof PageArchive)) {
-            $dir .= '/'.basename($file, funky_cache_suffix());
-            if (!is_dir($dir)) {
-                mkdir($dir);
-            }
-        }
-        return file_put_contents($this->path(), $this->content(), LOCK_EX);
+        $newpath = $dir.'/'.$file;
+        return file_put_contents($newpath, $this->content(), LOCK_EX);
     }
 
 
