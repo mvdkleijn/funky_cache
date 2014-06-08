@@ -100,14 +100,14 @@ else {
 
     function funky_cache_create($page) {
         if ($page->funky_cache_enabled) {
-            $data['url'] = URI_PUBLIC.CURRENT_URI.URL_SUFFIX;
+            $data['url'] = URI_PUBLIC.CURRENT_URI;
 
             // Correct URL for frontpage - should become index.html
-            if ($data['url'] == URI_PUBLIC.URL_SUFFIX) {
-                $data['url'] = URI_PUBLIC.'index'.funky_cache_suffix();
+            if ($data['url'] == URI_PUBLIC) {
+                $data['url'] = URI_PUBLIC.'index';
             }
             
-            $data['url'] = funky_cache_folder().$data['url'];
+            $data['url'] = funky_cache_folder().$data['url'].funky_cache_suffix();
             $data['url'] = preg_replace('#//#', '/', $data['url']);
             $data['page'] = $page;
 
