@@ -56,12 +56,14 @@ class FunkyCachePage extends Record {
         if (!is_dir($dir)) {
             mkdir($dir,0755,true);
         }
-        $newpath = $dir.'/'.$file;
-        return file_put_contents($newpath, $this->content(), LOCK_EX);
+        $htmlfile = $dir.'/'.$file;
+        file_put_contents($htmlfile.'.gz', gzencode($this->content(), 6), LOCK_EX);
+        return file_put_contents($htmlfile, $this->content(), LOCK_EX);
     }
 
 
     public function beforeDelete() {
+        @unlink($this->path().'.gz');
         return @unlink($this->path());
     }
 
