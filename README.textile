@@ -1,7 +1,10 @@
-h3. Notes
+This is a fork from mvdkleijn/funky_cache. Please feel free to use it at your own risks.
 
-This is a fork from mvdkleijn/funky_cache with the following changes:
+Historical changes base on https://github.com/mvdkleijn/funky_cache/commit/35ad4e2804ab75e2f7018bc13760faa2a680f105
 
-07 June 2014 22:00
+08 June 2014 19:30 CEST
+- Generate the compressed version of the cached files
+
+07 June 2014 22:00 CEST
 - Remove unnecessary creation of empty folders
 - Remove dependency on URL_SUFFIX setting
