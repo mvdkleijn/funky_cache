@@ -1,7 +1,84 @@
-h3. Notes
+h3. Short history and status
 
-This is a fork from mvdkleijn/funky_cache with the following changes:
+The funky cache plugin for Wolf CMS was originally created by "tuupola":http://github.com/tuupola.
+Maintainership for the plugin was later taken over by "mvdkleijn":http://github.com/mvdkleijn at tuupola's request since he no longer had time to work on it.
+The current version of the plugin was tested to work on Wolf CMS 0.7.5 and upwards.
 
-07 June 2014 22:00
-- Remove unnecessary creation of empty folders
-- Remove dependency on URL_SUFFIX setting
+h3. Speed
+
+Following chart show number of requests per second on a test server.
+Three bars representing a Wolf CMS installation with no caching,
+with "File Cache plugin":http://www.antistatique.net/blog/index.php/post/cache-plugin-frogcms installed and
+with Funky Cache plugin installed. These numbers are just an indication.
+
+!http://chart.apis.google.com/chart?chs=540x120&chf=bg,s,ffffff|c,s,ffffff&chxt=x,y&chxl=1:|FunkyCache|FileCache|NoCache|0:|0.00|879.00|1,758.00&cht=bhg&chd=t:5.34,8.47,100.00&chco=4d89f9&chbh=25!
+
+h3. Install
+
+Copy the files to <i>wolf/plugins/funky_cache/</i> folder.
+
+<pre>
+cd wolf/plugins/
+git clone git://github.com/mvdkleijn/funky_cache.git funky_cache
+</pre>
+
+Open your _config.php_ and make sure the following is set:
+
+<pre>
+define('USE_MOD_REWRITE', true);
+</pre>
+
+Go to the Wolf CMS admin interface and enable the Funky Cache plugin.
+
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-admin-bar.png!
+
+A _"Cache"_ tab should appear after enabling the plugin. Click on the tab and check your settings. 
+
+_Cache file suffix_ is important! It is the suffix of static files written to disk. It should be the same as _URL_SUFFIX_ in wolf config.php.  If your _URL_SUFFIX_ is empty cache file suffix  will default to _.html_.
+
+_Cache folder_ is the folder where the static files are written. The folder is relative to the document root of your web server. If you leave this empty, cached files will be written to the document root of your web server. *The web server MUST have write access to the cache folder.* 
+
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-settings.png!
+
+Go to the shell (or your FTP client) and create the cache folder and give the web server write access to it. For example:
+
+<pre>
+> cd /path/to/document/root/
+> mkdir cache
+> chmod a+w cache
+</pre>
+
+Funky Cache depends on correctly set up mod_rewrite rules. The rules are different depending on your Wolf CMS and plugin settings. Click on _"Example rewrite rules"_ in the plugin's sidebar. Cut and paste the given code for your web server to the .htaccess file (or its equivalent) in your document root.
+
+!http://www.vanderkleijn.net/public/images/funky_cache/funky-cache-rules.png!
+
+h3. Changelog
+
+h4. 0.4.1
+
+* Fixed small issue with regards to tab being displayed (thanks chrisgo)
+* Added nginx rewrite rules to documentation screen (thanks marvind)
+
+h4. 0.4.0
+
+* Support for root and non-root sites.
+* Fixed some paths
+* Updated for 0.7.5
+
+h4. 0.3.6
+
+* Support for "Dashboard":http://github.com/mvdkleijn/dashboard plugin.
+* Support for SQLite3 ("sartas":http://github.com/sartas)
+* Support for urls without trailings slash (/foo/bar) and with trailing slash (/foo/bar/) when not using URL suffix.
+
+h4. 0.3.5
+
+* 0.9.5RC2 tried to use wrong views folder. 
+
+h4. 0.3.4
+
+* Fix compatibility issues with 0.9.5 mod_rewrite rules.
+* Show real (not cached) path in admin. 
+* Delete cached pages from harddrive when disabling plugin.
+* Fix sidebar view path for 0.9.5
+
