@@ -26,9 +26,19 @@ foreach ($cache as $page) {
 
 Plugin::deleteAllSettings('funky_cache');
 
+$driver = strtolower($PDO->getAttribute(Record::ATTR_DRIVER_NAME));
+
 $table = TABLE_PREFIX . "page";
-$PDO->exec("ALTER TABLE $table 
-            DROP COLUMN 'funky_cache_enabled'");
+
+if (("mysql" == $driver) || ("sqlite" == $driver)) {
+    $PDO->exec("ALTER TABLE $table
+                DROP COLUMN 'funky_cache_enabled'");
+}
+
+if ("pgsql" == $driver)) {
+    $PDO->exec("ALTER TABLE $table
+                DROP COLUMN funky_cache_enabled");
+}
 
 $table = TABLE_PREFIX . "funky_cache_page";
 $PDO->exec("DROP TABLE $table");

@@ -26,14 +26,23 @@ Plugin::setAllSettings($settings, 'funky_cache');
  
 $PDO = Record::getConnection();
                     
+$driver = strtolower($PDO->getAttribute(Record::ATTR_DRIVER_NAME));
+
 $table = TABLE_PREFIX . "page";
-$PDO->exec("ALTER TABLE $table
-            ADD funky_cache_enabled tinyint(1) 
-            NOT NULL default 1");
+
+if (("mysql" == $driver) || ("sqlite" == $driver)) {
+    $PDO->exec("ALTER TABLE $table
+                ADD funky_cache_enabled tinyint(1)
+                NOT NULL default 1");
+}
+
+if ("pgsql" == $driver) {
+    $PDO->exec("ALTER TABLE $table
+                ADD funky_cache_enabled boolean
+                NOT NULL default true");
+}
 
 $table = TABLE_PREFIX . "funky_cache_page";
-
-$driver = strtolower($PDO->getAttribute(Record::ATTR_DRIVER_NAME));
 
 if ("mysql" == $driver) {
     $PDO->exec("CREATE TABLE $table (
@@ -54,5 +63,11 @@ if ("sqlite" == $driver) {
                 )");    
 }
 
-
-            
+if ("pgsql" == $driver) {
+    $PDO->exec("CREATE TABLE $table (
+                id SERIAL PRIMARY KEY,
+                url varchar(255) default NULL,
+                created_on timestamp default NULL,
+                UNIQUE (url)
+                )");
+}
