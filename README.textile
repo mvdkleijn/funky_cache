@@ -1,3 +1,5 @@
+**Status:** No longer active / archived
+
 h3. Short history and status
 
 The funky cache plugin for Wolf CMS was originally created by "tuupola":http://github.com/tuupola.
